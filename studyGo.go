@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 )
 
 type person struct {
@@ -13,6 +14,12 @@ type person struct {
 }
 
 func main() {
-	data, error := json.Marshal(&person{ID: 001, Name: "Pongpipat siangsai", Tell: "0661320025", Gender: "Male"})
-	fmt.Println(string(data), "Error :", error)
+	p := `{"ID":101,"Name":"Fah hahaa","Tell":"0989956241","Gender":"Female"}`
+
+	var data person
+	err := json.Unmarshal([]byte(p), &data)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("ID = ", data.ID, " Name =", data.Name, " Tell =", data.Tell, " Gender = ", data.Gender)
 }
