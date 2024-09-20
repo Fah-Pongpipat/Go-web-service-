@@ -1,21 +1,20 @@
 package main
 
-// import (
-// 	"fmt"
-// 	"net/http"
-// )
-
-// // func greet(w http.ResponseWriter, r *http.Request) {
-// // 	fmt.Fprintf(w, "Hello World! %s", time.Now())
-// // }
+type Person struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+	Age  int    `json:"age"`
+}
 
 // func main() {
-// 	http.HandleFunc("/", helloMyName)
-// 	http.ListenAndServe(":8080", nil)
-// }
+// 	JsonData := `[{"id":101,"name": "John", "age":12}]`
+// 	var person []map[string]interface{}
+// 	err := json.Unmarshal([]byte(JsonData), &person)
 
-// func helloMyName(w http.ResponseWriter, r *http.Request) {
-// 	name := "Fah"
-
-// 	fmt.Fprintf(w, "Hello %s", name)
+// 	if err != nil {
+// 		fmt.Print(err)
+// 	} else {
+// 		// แก้ไขให้แสดงข้อมูลที่ถูก Unmarshal
+// 		fmt.Println(person)
+// 	}
 // }
