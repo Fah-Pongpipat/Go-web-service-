@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
+	"time"
 )
 
 type product struct {
@@ -18,9 +20,9 @@ var ProductList []product
 
 func intProduct() {
 	products := `[
-		{"id": 1, "name": "Apple", "price": 10.0},
-		{"id": 2, "name": "Banana", "price": 5.0},
-		{"id": 3, "name": "Orange", "price": 7.0}
+		{"id": 102156, "name": "Apple", "price": 10.0},
+		{"id": 201879, "name": "Banana", "price": 5.0},
+		{"id": 332445, "name": "Orange", "price": 7.0}
 	]`
 
 	err := json.Unmarshal([]byte(products), &ProductList)
@@ -50,11 +52,28 @@ func productHandler(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
+		if newProdict.ID != 0 {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+		newProdict.ID = checkID()
 		ProductList = append(ProductList, newProdict)
 		w.WriteHeader(http.StatusCreated)
 		return
 
 	}
+}
+
+func checkID() int {
+	newID := 0
+	rand.Seed(time.Now().UnixNano())
+	randomID := rand.Intn(999999)
+	for _, product := range ProductList {
+		if product.ID != randomID {
+			newID = randomID
+		}
+	}
+	return newID
 }
 func main() {
 	intProduct()
